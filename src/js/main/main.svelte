@@ -1,1 +1,1 @@
-<h1 style="color: #ff5b3b;">Welcome to Bolt CEP!</h1>
+<h1 class="text-red-400">Welcome to Bolt CEP!</h1>
