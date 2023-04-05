@@ -11,7 +11,9 @@
     "symlink": "cross-env ACTION=symlink vite",
     "delsymlink": "cross-env ACTION=delsymlink vite"
   },
-  "dependencies": {},
+  "dependencies": {
+    "daisyui": "^2.51.5"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.10",
     "@babel/plugin-proposal-class-properties": "^7.16.0",
