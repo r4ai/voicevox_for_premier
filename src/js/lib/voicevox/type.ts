@@ -23,3 +23,20 @@ export type Query = {
   outputStereo: boolean;
   kana: string;
 };
+
+export type SupportedFeatures = {
+  permitted_synthesis_morphing: string;
+};
+
+export type Style = {
+  name: string;
+  id: number;
+};
+
+export type Speaker = {
+  supported_features: SupportedFeatures;
+  name: string;
+  speaker_uuid: string;
+  styles: Style[];
+  version: string;
+};
