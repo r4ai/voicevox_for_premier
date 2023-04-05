@@ -1,0 +1,146 @@
+<mxfile host="65bd71144e">
+    <diagram id="661OPi6D3fUnb4w_LSkU" name="Page-1">
+        <mxGraphModel dx="724" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="VOICEVOX For Premier Extension" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="365" y="260" width="745" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;glass=0;sketch=0;strokeColor=#7056F0;strokeWidth=1;fontColor=none;fillColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="135" y="130" width="105" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;glass=0;sketch=0;strokeColor=#33FFFF;strokeWidth=1;fontColor=#FAFAFA;fillColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="301.25" y="150" width="100" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;font color=&quot;#7056f0&quot;&gt;Premier Pro&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="136.25" y="100" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="onUserInput" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="3">
+                    <mxGeometry x="311.25" y="190" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="3" source="25" target="17">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="241.25" y="260" as="sourcePoint"/>
+                        <mxPoint x="291.25" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="27" value="ExtendScriptで通信" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="26">
+                    <mxGeometry x="-0.3102" relative="1" as="geometry">
+                        <mxPoint x="24" y="-16" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="28" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="3" source="19" target="25">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="241.25" y="260" as="sourcePoint"/>
+                        <mxPoint x="291.25" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" value="JSで値を得る" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="28">
+                    <mxGeometry x="-0.3306" y="-3" relative="1" as="geometry">
+                        <mxPoint x="26" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="VOICEVOX ENGINE" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="3">
+                    <mxGeometry x="511.25" y="190" width="135" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="3" source="25" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="181.25" as="sourcePoint"/>
+                        <mxPoint x="458.7499999999998" y="140.0000000000001" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="34" value="音声&lt;br&gt;ファイル" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="3">
+                    <mxGeometry x="551.25" y="320" width="65" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="onFileChange" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="3">
+                    <mxGeometry x="311.25" y="320" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="3" source="34" target="35">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="331.25" y="310" as="sourcePoint"/>
+                        <mxPoint x="441.25" y="360" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="51" value="&lt;font color=&quot;#fafafa&quot;&gt;音声ファイルの読み込み&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#33FFFF;" vertex="1" connectable="0" parent="36">
+                    <mxGeometry x="0.2359" y="-2" relative="1" as="geometry">
+                        <mxPoint x="22" y="-8" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="31" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.411;entryY=0.013;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="3" source="2" target="34">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="331.25" y="190" as="sourcePoint"/>
+                        <mxPoint x="631.25" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="39" value="" style="endArrow=classic;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="3" source="35" target="38">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="331.25" y="310" as="sourcePoint"/>
+                        <mxPoint x="381.25" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="" style="group;rounded=0;glass=0;shadow=0;strokeColor=none;perimeterSpacing=3;strokeWidth=5;fontColor=none;noLabel=1;" vertex="1" connectable="0" parent="3">
+                    <mxGeometry x="131.25" y="140" width="100" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Text box" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="41">
+                    <mxGeometry x="10" width="85" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Extension&lt;br&gt;の画面&lt;br&gt;(Svelte)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="41">
+                    <mxGeometry x="10" y="140" width="90" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="Audio" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="41">
+                    <mxGeometry x="10" y="230" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="音声オブジェクト&lt;br&gt;を配置" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="226.25" y="400" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="&lt;font color=&quot;#33ffff&quot;&gt;Extension&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#FAFAFA;" vertex="1" parent="3">
+                    <mxGeometry x="311.25" y="120" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="音声ファイルを出力" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="571.25" y="275" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="HTTPS通信&lt;br&gt;(音声を出力させる)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="3">
+                    <mxGeometry x="381.25" y="190" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="41.25" y="270" as="sourcePoint"/>
+                        <mxPoint x="141.25" y="170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="原稿を入力" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="20">
+                    <mxGeometry x="0.1905" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="3" source="16" target="19">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="241.25" y="330" as="sourcePoint"/>
+                        <mxPoint x="291.25" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="音声の設定をする" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="23">
+                    <mxGeometry x="0.2824" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-11" y="-12" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="46" value="&lt;font color=&quot;#fafafa&quot;&gt;音声の確認&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#7056F0;rounded=0;shadow=0;glass=0;sketch=0;strokeWidth=1;" vertex="1" parent="3">
+                    <mxGeometry x="41.25" y="390" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="endArrow=classic;html=1;fontColor=#7056F0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="3" source="38">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="261.25" y="310" as="sourcePoint"/>
+                        <mxPoint x="41.25" y="350" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="3">
+                    <mxGeometry x="11.25" y="275" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;VOICEVOXアプリ&lt;br&gt;を起動すると、http://localhost:50021&lt;br&gt;に起動される&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.cloud_callout;rounded=0;shadow=0;glass=0;sketch=0;strokeColor=#FAFAFA;strokeWidth=1;fontColor=#33FFFF;fillColor=none;flipH=0;" vertex="1" parent="3">
+                    <mxGeometry x="538.75" y="50" width="195" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
