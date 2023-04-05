@@ -1,4 +1,8 @@
-<img src="src/js/assets/bolt-cep.svg" alt="Bolt CEP" title="Bolt CEP" width="400" />
+# VOICEVOX For Premier Pro
+
+![設計図](diagrams.drawio.svg)
+
+# About bolt-cep
 
 A lightning-fast boilerplate for building Adobe CEP Extensions in React, Vue, or Svelte built on Vite + TypeScript + Sass
 
