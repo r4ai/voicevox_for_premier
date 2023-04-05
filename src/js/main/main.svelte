@@ -1,58 +1,8 @@
 <script lang="ts" context="module">
-  type Mora = {
-    text: string;
-    consonant: string;
-    consonant_length: number;
-    vowel: string;
-    vowel_length: number;
-    pitch: number;
-  };
-
-  type Query = {
-    accent_phrases: {
-      moras: Mora[];
-      accent: number;
-      pause_mora: Mora;
-    };
-    speedScale: number;
-    pitchScale: number;
-    intonationScale: number;
-    volumeScale: number;
-    prePhonemeLength: number;
-    postPhonemeLength: number;
-    outputSamplingRate: number;
-    outputStereo: boolean;
-    kana: string;
-  };
-
-  async function createQuery(text: string): Promise<Query> {
-    const res = await superagent
-      .post("http://localhost:50021/audio_query")
-      .query({ speaker: 1, text: text });
-    if (!res) {
-      throw new Error("Failed to create query");
-    }
-    console.info("created query", res.body);
-    return res.body;
-  }
-
-  async function createVoice(queryObj: Query): Promise<Blob> {
-    const res = await superagent
-      .post("http://localhost:50021/synthesis")
-      .query({ speaker: 1 })
-      .send(queryObj)
-      .responseType("blob");
-
-    if (!res) {
-      throw new Error("Failed to create voice");
-    }
-    console.info("created voice audioData");
-    return res.body;
-  }
 </script>
 
 <script lang="ts">
-  import superagent from "superagent";
+  import { createQuery, createVoice } from "@/lib/voicevox/api";
 
   let character = "";
   let inputText = "";
