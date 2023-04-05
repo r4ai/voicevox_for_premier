@@ -50,67 +50,66 @@
 </script>
 
 <main data-theme="business">
-  <form
-    class="form-control w-full max-w-xs flex gap-4 mx-2"
-    on:submit|preventDefault={handleSubmit}
-  >
-    <div>
-      <label class="label" for="character-select">
-        <span class="label-text">キャラクターを選択</span>
-      </label>
-      <select
-        class="select select-bordered select-sm"
-        id="character-select"
-        bind:value={speaker}
-      >
-        <option value="" disabled selected>キャラクターを選択</option>
-        {#each speakers as speaker}
-          <option value={speaker}>{speaker.name}</option>
-        {/each}
-      </select>
-    </div>
-    {#if speaker && speaker.styles.length > 0}
+  <form class="w-full max-w-sm" on:submit|preventDefault={handleSubmit}>
+    <div class="mx-2 flex flex-col gap-2 mb-2">
       <div>
-        <label class="label" for="character-style-select">
-          <span class="label-text">スタイルを選択</span>
+        <label class="label" for="character-select">
+          <span class="label-text">キャラクターを選択</span>
         </label>
         <select
           class="select select-bordered select-sm"
-          id="character-style-select"
-          bind:value={speakerId}
+          id="character-select"
+          bind:value={speaker}
         >
-          <option value={undefined} disabled selected>スタイルを選択</option>
-          {#each speaker.styles as style}
-            <option value={style.id}>{style.name}</option>
+          <option value="" disabled selected>キャラクターを選択</option>
+          {#each speakers as speaker}
+            <option value={speaker}>{speaker.name}</option>
           {/each}
         </select>
       </div>
-    {/if}
-    <div>
-      <label class="label" for="input-text">
-        <span class="label-text">読み上げる文章を入力</span>
-      </label>
-      <textarea
-        class="textarea h-24 textarea-bordered textarea-sm w-full"
-        placeholder="読み上げる文章を入力"
-        id="input-text"
-        bind:value={inputText}
-      />
-    </div>
-    <Option />
-    <div class="w-full text-center">
-      <input type="submit" class="btn btn-md btn-primary" value="Generate" />
-    </div>
-
-    <!-- 開発時のテスト用 -->
-    {#if audioData}
-      <audio controls>
-        <source
-          src={audioData ? window.URL.createObjectURL(audioData) : undefined}
-          type="audio/wav"
+      {#if speaker && speaker.styles.length > 0}
+        <div>
+          <label class="label" for="character-style-select">
+            <span class="label-text">スタイルを選択</span>
+          </label>
+          <select
+            class="select select-bordered select-sm"
+            id="character-style-select"
+            bind:value={speakerId}
+          >
+            <option value={undefined} disabled selected>スタイルを選択</option>
+            {#each speaker.styles as style}
+              <option value={style.id}>{style.name}</option>
+            {/each}
+          </select>
+        </div>
+      {/if}
+      <div>
+        <label class="label" for="input-text">
+          <span class="label-text">読み上げる文章を入力</span>
+        </label>
+        <textarea
+          class="textarea h-24 textarea-bordered textarea-sm w-full max-w-full"
+          placeholder="読み上げる文章を入力"
+          id="input-text"
+          bind:value={inputText}
         />
-      </audio>
-    {/if}
+      </div>
+      <Option />
+      <div class="w-full text-center">
+        <input type="submit" class="btn btn-md btn-primary" value="Generate" />
+      </div>
+
+      <!-- 開発時のテスト用 -->
+      {#if audioData}
+        <audio controls>
+          <source
+            src={audioData ? window.URL.createObjectURL(audioData) : undefined}
+            type="audio/wav"
+          />
+        </audio>
+      {/if}
+    </div>
   </form>
 </main>
 
