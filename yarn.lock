@@ -3299,6 +3299,11 @@ regjsparser@^0.9.1:
   dependencies:
     jsesc "~0.5.0"
 
+remeda@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.12.0.tgz#dd11ff8640ecf1fd11f3a7a0d8d577cbf579ba40"
+  integrity sha512-IuuWrP1UEyAafKHPQ6bSRGKUxvMh/Kla5LP8ujM/BMf3ciwt5M68j0vlYOl1pIv3J2pS+BMlFKqLtHoYuzcwYQ==
+
 resolve-from@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"

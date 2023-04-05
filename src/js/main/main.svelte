@@ -1,32 +1,55 @@
 <script lang="ts" context="module">
+  function updatedQueryObj(queryObj: Query, newQuery: Partial<Query>) {
+    return {
+      ...queryObj,
+      ...newQuery,
+    };
+  }
 </script>
 
 <script lang="ts">
   import { createQuery, createVoice, getSpeakers } from "@/lib/voicevox/api";
-  import { Speaker } from "@/lib/voicevox/type";
+  import { Query, Speaker } from "@/lib/voicevox/type";
   import { onMount } from "svelte";
   import Option from "@/lib/components/Option.svelte";
+  import {
+    text,
+    speakerId,
+    audioData,
+    queryObj,
+    speedScale,
+    pitchScale,
+    intonationScale,
+    volumeScale,
+    prePhonemeLength,
+    postPhonemeLength,
+  } from "@/lib/stores";
 
   let speakers: Speaker[] = [];
-
   let speaker: Speaker | undefined = undefined;
-  let speakerId: number | undefined = undefined;
-
-  let inputText: string = "";
-  let audioData: Blob | undefined = undefined;
 
   async function handleSubmit(e: Event) {
     e.preventDefault();
     try {
-      if (!inputText || inputText.length === 0) {
+      if (!$text || $text.length === 0) {
         throw new Error("読み上げる文章が入力されていません。");
       }
-      if (typeof speakerId === "undefined" || (speakerId as number) < 0) {
+      if (typeof $speakerId === "undefined" || ($speakerId as number) < 0) {
         throw new Error("キャラクターがもしくはスタイルが選択されていません。");
       }
-      const queryObj = await createQuery(inputText, speakerId);
-      audioData = await createVoice(queryObj, speakerId);
-      console.info("Audio generated!");
+      const gotQueryObj = await createQuery($text, $speakerId);
+      const custom: Partial<Query> = {
+        speedScale: $speedScale,
+        pitchScale: $pitchScale,
+        volumeScale: $volumeScale,
+        intonationScale: $intonationScale,
+        prePhonemeLength: $prePhonemeLength,
+        postPhonemeLength: $postPhonemeLength,
+      };
+      console.log("custom", custom);
+      $queryObj = updatedQueryObj(gotQueryObj, custom);
+      $audioData = await createVoice($queryObj, $speakerId);
+      console.info("Audio generated!", $queryObj);
     } catch (e) {
       console.error(e);
     }
@@ -37,7 +60,7 @@
   function handleSpeakerChange(speaker: Speaker | undefined) {
     if (speaker) {
       if (speaker.styles.length === 1) {
-        speakerId = speaker.styles[0].id;
+        $speakerId = speaker.styles[0].id;
       }
     }
   }
@@ -75,7 +98,7 @@
           <select
             class="select select-bordered select-sm"
             id="character-style-select"
-            bind:value={speakerId}
+            bind:value={$speakerId}
           >
             <option value={undefined} disabled selected>スタイルを選択</option>
             {#each speaker.styles as style}
@@ -92,7 +115,7 @@
           class="textarea h-24 textarea-bordered textarea-sm w-full max-w-full"
           placeholder="読み上げる文章を入力"
           id="input-text"
-          bind:value={inputText}
+          bind:value={$text}
         />
       </div>
       <Option />
@@ -101,10 +124,10 @@
       </div>
 
       <!-- 開発時のテスト用 -->
-      {#if audioData}
+      {#if $audioData}
         <audio controls>
           <source
-            src={audioData ? window.URL.createObjectURL(audioData) : undefined}
+            src={window.URL.createObjectURL($audioData)}
             type="audio/wav"
           />
         </audio>

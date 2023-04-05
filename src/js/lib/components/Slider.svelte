@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let value: number;
+  import { Writable } from "svelte/store";
+
+  export let value: Writable<number>;
   export let min: number;
   export let max: number;
   export let step: number;
@@ -15,7 +17,7 @@
       {min}
       {max}
       {step}
-      bind:value
+      bind:value={$value}
     />
   </label>
   <input
@@ -23,7 +25,7 @@
     data-theme="dark"
     {min}
     {max}
-    bind:value
+    bind:value={$value}
     class="range range-xs"
     {step}
     id="speed-select"
