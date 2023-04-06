@@ -16,22 +16,6 @@
     evalES(`alert("${msg}");`, true);
   }
 
-  /**
-   * MoGRTファイルをインポートする
-   * @returns MoGRTファイルのパス
-   */
-  async function getMogrtFilePath() {
-    const fileterString =
-      (await getOs()) === "windows" ? "Motion Graphics Templates:*.mogrt" : "";
-    const mogrtFile = await evalES(
-      `var res = File.openDialog("字幕の生成に使うMoGRTファイルを選択", "Adobe After Effects Mogrt:*.mogrt", false); res ? res.fsName : null;`,
-      true
-    );
-    const fp = path.parse(mogrtFile);
-    alertMsg(`MoGRTファイルをインポートしました。${fp.dir} / ${fp.base}`);
-    return mogrtFile;
-  }
-
   // async function addText(mogrtFilePath: string, text: string) {
   //   const layerTitle = "Caption";
   //   await alertMsg(`${mogrtFilePath}`);
@@ -114,7 +98,7 @@
   }
 
   async function handleFileSelect() {
-    const res = await getMogrtFilePath();
+    const res = await evalTS("importMogrt");
     if (res) {
       $mogrtFilePath = res;
     }
@@ -270,7 +254,13 @@
       </button>
     </div>
   {/if}
-  <button on:click={() => evalTS("helloWorld")}>TEST</button>
+  <button
+    on:click={() => {
+      evalTS("importMogrt").then((res) => {
+        alert(res);
+      });
+    }}>TEST</button
+  >
 </main>
 
 <style>
