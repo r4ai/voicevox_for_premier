@@ -30,3 +30,20 @@ export async function getSpeakers(): Promise<Speaker[]> {
   console.trace("got speakers", res.body);
   return res.body;
 }
+
+export async function connectTest(): Promise<boolean> {
+  return superagent
+    .get("http://localhost:50021/setting")
+    .timeout({
+      response: 2000,
+      deadline: 2000,
+    })
+    .then((res) => {
+      console.trace("connected to voicevox");
+      return true;
+    })
+    .catch((err) => {
+      console.trace("failed to connect to voicevox");
+      return false;
+    });
+}
