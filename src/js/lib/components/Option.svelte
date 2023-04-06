@@ -13,7 +13,7 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div
   tabindex="0"
-  class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
+  class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box my-2"
 >
   <input type="checkbox" />
   <div class="collapse-title text-md font-medium">Options</div>

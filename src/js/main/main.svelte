@@ -35,7 +35,6 @@
     mogrtFilePath,
   } from "@/lib/stores";
   import { evalTS } from "@/lib/utils/bolt";
-  import { Diamonds } from "svelte-loading-spinners";
   import Loading from "@/lib/components/Loading.svelte";
 
   type ConnectingStatus = "connecting" | "connected" | "failed";
@@ -43,6 +42,8 @@
 
   let speakers: Speaker[] = [];
   let speaker: Speaker | undefined = undefined;
+
+  let files: FileList;
 
   async function handleSubmit(e: Event) {
     e.preventDefault();
@@ -72,7 +73,20 @@
     }
   }
 
+  function handleFileSelect() {
+    // evalTS("selectMogrt").then((res) => {
+    //   $mogrtFilePath = res;
+    // });
+    evalTS("mogrt");
+  }
+
   $: handleSpeakerChange(speaker);
+  $: {
+    if (files?.[0]) {
+      $mogrtFilePath = files[0].name;
+      localStorage.setItem("mogrtFile", files[0].name);
+    }
+  }
 
   function handleSpeakerChange(speaker: Speaker | undefined) {
     if (speaker) {
@@ -94,10 +108,18 @@
       });
   }
 
+  function loadPreviousSettings() {
+    const mogrtFile = localStorage.getItem("mogrtFile");
+    if (mogrtFile) {
+      $mogrtFilePath = mogrtFile;
+    }
+  }
+
   onMount(() => {
     getSpeakers().then((res) => {
       speakers = res;
     });
+    loadPreviousSettings();
     connectToVoicevox();
   });
 </script>
@@ -150,20 +172,26 @@
             bind:value={$text}
           />
         </div>
-        <!-- <div>
-        <label class="label" for="mogrt-select">
-          <span class="label-text">字幕の生成に使うMoGRTファイルを選択</span>
-        </label>
-        {#if $mogrtFilePath}
-          <span>{$mogrtFilePath}</span>
-        {/if}
-        <button
-          class="btn btn-sm btn-primary"
-          id="mogrt-select"
-          on:click={() => evalTS("selectMogrt")}
-          >{$mogrtFilePath ? $mogrtFilePath.toString() : "MoGRTファイルを選択"}
-        </button>
-      </div> -->
+        <div>
+          <label class="label" for="mogrt-select">
+            <span class="label-text">字幕の生成に使うMoGRTファイルを選択</span>
+          </label>
+          <div
+            class="flex flex-row rounded-sm border border-neutral-700 overflow-hidden"
+          >
+            <button
+              class="btn btn-sm btn-secondary"
+              on:click|preventDefault={handleFileSelect}
+            >
+              参照
+            </button>
+            <div class="bg-base-100 grow flex overflow-auto">
+              <div class="m-auto">
+                {$mogrtFilePath ? $mogrtFilePath : "ファイルが未選択です"}
+              </div>
+            </div>
+          </div>
+        </div>
         <Option />
         <div class="w-full text-center">
           <input
