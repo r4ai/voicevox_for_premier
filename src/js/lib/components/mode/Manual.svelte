@@ -162,7 +162,11 @@
           bind:value={$text}
         />
       </div>
-      <InputFile {handleFileSelect} filePath={mogrtFilePath} />
+      <InputFile
+        label="字幕の生成に使うMoGRTファイルを選択"
+        {handleFileSelect}
+        filePath={mogrtFilePath}
+      />
       <Option />
       <div class="w-full text-center">
         <input type="submit" class="btn btn-md btn-primary" value="Generate" />
