@@ -26,6 +26,7 @@
   import Loading from "@/lib/components/Loading.svelte";
   import path from "path";
   import { alertMsg, getFileName } from "@/main/main.svelte";
+  import InputFile from "../InputFile.svelte";
 
   let isLoaded: boolean = false;
 
@@ -161,34 +162,7 @@
           bind:value={$text}
         />
       </div>
-      <div>
-        <label class="label" for="mogrt-select">
-          <span class="label-text">字幕の生成に使うMoGRTファイルを選択</span>
-        </label>
-        <div
-          class="flex flex-row rounded-sm border border-neutral-700 overflow-hidden"
-        >
-          <button
-            class="btn btn-sm btn-secondary"
-            on:click|preventDefault={handleFileSelect}
-          >
-            参照
-          </button>
-          <div class="bg-base-100 grow flex overflow-auto">
-            <div class="m-auto">
-              {#if $mogrtFilePath}
-                {#await getFileName($mogrtFilePath)}
-                  <span>ファイルが選択されていません</span>
-                {:then stem}
-                  <span>{stem}</span>
-                {/await}
-              {:else}
-                <span>ファイルが選択されていません</span>
-              {/if}
-            </div>
-          </div>
-        </div>
-      </div>
+      <InputFile {handleFileSelect} filePath={mogrtFilePath} />
       <Option />
       <div class="w-full text-center">
         <input type="submit" class="btn btn-md btn-primary" value="Generate" />

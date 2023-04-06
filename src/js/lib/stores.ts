@@ -2,6 +2,7 @@ import { Writable, writable } from "svelte/store";
 import { Query } from "./voicevox/type";
 
 // * Global states
+
 type ConnectingStatus = "connecting" | "connected" | "failed";
 export const isConnected: Writable<ConnectingStatus> = writable("connecting");
 
