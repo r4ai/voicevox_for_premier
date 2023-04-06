@@ -28,7 +28,23 @@ export const addText = (mogrtPath: string, text: string) => {
       vidTrackOffset,
       audTrackOffset
     );
-    alert("done");
+    if (newTrackItem) {
+      const moComp = newTrackItem.getMGTComponent();
+      if (moComp) {
+        const params = moComp.properties;
+        const srcTextPram = params.getParamForDisplayName("Source Text");
+        if (srcTextPram) {
+          const oldVal = srcTextPram.getValue();
+          srcTextPram.setValue(text);
+        }
+      } else {
+        alert("Failed to get MGT component from track item");
+        return;
+      }
+    } else {
+      alert("No new track item");
+      return;
+    }
   } else {
     alert("No active sequence");
     return;
