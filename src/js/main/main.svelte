@@ -33,6 +33,7 @@
 <script lang="ts">
   import { evalES, evalTS } from "@/lib/utils/bolt";
   import path from "path";
+  import fs from "fs";
   import { connectTest } from "@/lib/voicevox/api";
   import { onMount } from "svelte";
   import Loading from "@/lib/components/Loading.svelte";
@@ -41,6 +42,8 @@
   import Settings from "@/lib/components/mode/Settings.svelte";
   import { isConnected, projectDir, projectName } from "@/lib/stores";
   import Error from "@/lib/components/Error.svelte";
+  import { DEFAULT_PROJECT_FOLDER_NAME } from "@/lib/constants";
+  import { getProjectPath } from "../../jsx/ppro/ppro";
 
   type Mode = "auto" | "manual" | "settings";
   let mode: Mode = "manual";
@@ -63,6 +66,21 @@
     );
     if (savedProjectDir) {
       $projectDir = savedProjectDir;
+    } else {
+      const pPath = path.normalize(await evalTS("getProjectPath"));
+      alertMsg(pPath);
+      const pDir = path.dirname(pPath);
+      alertMsg(pDir);
+      $projectDir = path.join(
+        await evalTS("getProjectPath"),
+        $projectName,
+        DEFAULT_PROJECT_FOLDER_NAME
+      );
+      fs.mkdir($projectDir, { recursive: true }, (err) => {
+        if (err) {
+          alertMsg(err.message);
+        }
+      });
     }
   }
 

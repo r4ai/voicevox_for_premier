@@ -1,10 +1,8 @@
+<script lang="ts" context="module">
+</script>
+
 <script lang="ts">
-  import {
-    connectTest,
-    createQuery,
-    createVoice,
-    getSpeakers,
-  } from "@/lib/voicevox/api";
+  import { createQuery, createVoice, getSpeakers } from "@/lib/voicevox/api";
   import { Query, Speaker } from "@/lib/voicevox/type";
   import { onMount } from "svelte";
   import Option from "@/lib/components/Option.svelte";
