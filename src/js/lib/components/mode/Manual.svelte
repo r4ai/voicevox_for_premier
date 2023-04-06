@@ -117,8 +117,8 @@
 </script>
 
 {#if isLoaded}
-  <form class="w-full max-w-sm" on:submit|preventDefault={handleSubmit}>
-    <div class="mx-2 flex flex-col gap-2 mb-2">
+  <form class="w-full" on:submit|preventDefault={handleSubmit}>
+    <div class="m-2 flex flex-col gap-2">
       <div>
         <label class="label" for="character-select">
           <span class="label-text">キャラクターを選択</span>
