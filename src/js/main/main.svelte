@@ -23,68 +23,25 @@
   async function getMogrtFilePath() {
     const fileterString =
       (await getOs()) === "windows" ? "Motion Graphics Templates:*.mogrt" : "";
-    const mogrtFile = match(
-      await evalES(
-        `var res = File.openDialog("字幕の生成に使うMoGRTファイルを選択", "Adobe After Effects Mogrt:*.mogrt", false); res ? res.fsName : null;`,
-        true
-      )
-    )
-      .with("null", () => null)
-      .otherwise((res) => res);
+    const mogrtFile = await evalES(
+      `var res = File.openDialog("字幕の生成に使うMoGRTファイルを選択", "Adobe After Effects Mogrt:*.mogrt", false); res ? res.fsName : null;`,
+      true
+    );
+    const fp = path.parse(mogrtFile);
+    alertMsg(`MoGRTファイルをインポートしました。${fp.dir} / ${fp.base}`);
     return mogrtFile;
   }
 
   async function addText(mogrtFilePath: string, text: string) {
     const layerTitle = "Caption";
-    const res = await evalES(
-      `
-function addTextFromMogrtAndText() {
-  var proj = app.project;
-  var activeSeq = proj.activeSequence;
-  var targetTime = activeSeq.getPlayerPosition();
-
-  var vidTrackOffset = 0;
-  var audTrackOffset = 0;
-
-  var newTrackItem = activeSeq.importMGT(
-    ${mogrtFilePath},
-    targetTime.ticks,
-    vidTrackOffset,
-    audTrackOffset
-  );
-
-  if (!newTrackItem) {
-    alert("Could not import the MoGRT file!");
-    return false;
-  }
-
-  var moComp = newTrackItem.getMGTComponent();
-  if (moComp) {
-    var params = moComp.properties;
-    var srcTextParam = params.getParamForDisplayName(${layerTitle});
-    if (srcTextParam) {
-      var val = srcTextParam.getValue();
-      srcTextParam.setValue(${text});
-    } else {
-      alert("Could not find the text parameter!");
-      return false;
-    }
-  } else {
-    alert("Could not find the MGTComponent!");
-    return false;
-  }
-  alert("Done!");
-  return true;
-};
-addTextFromMogrtAndText();
-    `,
-      true
-    );
-    alertMsg(res);
+    await alertMsg(`${mogrtFilePath}`);
+    evalTS("addTextFromMogrt", mogrtFilePath, text).then((r) => alert(r));
   }
 
   async function getFileName(filePath: string) {
-    return path.basename(filePath);
+    const cloned = filePath.slice();
+    const res = path.basename(cloned);
+    return res;
   }
 </script>
 
@@ -313,6 +270,7 @@ addTextFromMogrtAndText();
       </button>
     </div>
   {/if}
+  <button on:click={() => evalTS("helloWorld")}>TEST</button>
 </main>
 
 <style>

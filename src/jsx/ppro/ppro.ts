@@ -24,12 +24,7 @@ export const mogrt = () => {
   return "a";
 };
 
-export function addTextFromMogrt(mogrtFile: File, text: string) {
-  if (!mogrtFile.exists) {
-    alert("Could not find the `Classic Title.mogrt` file!");
-    return;
-  }
-
+export function addTextFromMogrt(mogrtFile: string, text: string) {
   const proj = app.project;
   const activeSeq = proj.activeSequence;
   const targetTime = activeSeq.getPlayerPosition();
@@ -38,7 +33,7 @@ export function addTextFromMogrt(mogrtFile: File, text: string) {
   const audTrackOffset = 0;
 
   const newTrackItem = activeSeq.importMGT(
-    mogrtFile.fsName,
+    mogrtFile,
     targetTime.ticks,
     vidTrackOffset,
     audTrackOffset
