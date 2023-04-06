@@ -16,6 +16,16 @@ export const importMogrt = (): string => {
   return mogrtFile.fsName;
 };
 
+export const getProjectName: () => string = () => {
+  const project = app.project;
+  if (project) {
+    return project.name;
+  } else {
+    alert("No active project");
+    return "";
+  }
+};
+
 export const selectProjectDir = (): string => {
   const projectDir = Folder.selectDialog("Select a project directory");
   return projectDir.fsName;

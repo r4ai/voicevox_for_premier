@@ -13,6 +13,10 @@
     return res;
   }
 
+  export function getKey(projectName: string, key: string) {
+    return `${projectName}-${key}`;
+  }
+
   export function connectToVoicevox() {
     isConnected.set("connecting");
     connectTest()
@@ -27,7 +31,7 @@
 </script>
 
 <script lang="ts">
-  import { evalES } from "@/lib/utils/bolt";
+  import { evalES, evalTS } from "@/lib/utils/bolt";
   import path from "path";
   import { connectTest } from "@/lib/voicevox/api";
   import { onMount } from "svelte";
@@ -35,21 +39,36 @@
   import Manual from "@/lib/components/mode/Manual.svelte";
   import Auto from "@/lib/components/mode/Auto.svelte";
   import Settings from "@/lib/components/mode/Settings.svelte";
-  import { isConnected, projectDir } from "@/lib/stores";
+  import { isConnected, projectDir, projectName } from "@/lib/stores";
   import Error from "@/lib/components/Error.svelte";
 
   type Mode = "auto" | "manual" | "settings";
   let mode: Mode = "manual";
 
-  function loadPreviousSettings() {
-    const savedProjectDir = localStorage.getItem("projectDir");
+  async function loadPreviousSettings() {
+    const pname = await evalTS("getProjectName");
+    $projectName = path.basename(pname, path.extname(pname));
+  }
+
+  async function lazyLoadPreviousSettings() {
+    if (!$projectName) {
+      alertMsg(
+        "プロジェクト名が取得できませんでした。一部機能が正常に動作しないため、Premiere Pro を再起動してください。"
+      );
+      return;
+    }
+
+    const savedProjectDir = localStorage.getItem(
+      getKey($projectName, "projectDir")
+    );
     if (savedProjectDir) {
       $projectDir = savedProjectDir;
     }
   }
 
   async function setUp() {
-    loadPreviousSettings();
+    await loadPreviousSettings();
+    await lazyLoadPreviousSettings();
     connectToVoicevox();
   }
 

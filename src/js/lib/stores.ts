@@ -23,4 +23,5 @@ export const postPhonemeLength: Writable<number> = writable(0.1);
 
 // * Settings
 
+export const projectName: Writable<string | undefined> = writable(undefined);
 export const projectDir: Writable<string | undefined> = writable(undefined);
