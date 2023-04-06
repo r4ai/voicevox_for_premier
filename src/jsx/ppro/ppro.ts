@@ -16,6 +16,11 @@ export const importMogrt = (): string => {
   return mogrtFile.fsName;
 };
 
+export const selectProjectDir = (): string => {
+  const projectDir = Folder.selectDialog("Select a project directory");
+  return projectDir.fsName;
+};
+
 export const addText = (mogrtPath: string, text: string) => {
   const activeSeq = app.project.activeSequence;
   if (activeSeq) {

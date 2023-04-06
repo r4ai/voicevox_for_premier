@@ -35,14 +35,26 @@
   import Manual from "@/lib/components/mode/Manual.svelte";
   import Auto from "@/lib/components/mode/Auto.svelte";
   import Settings from "@/lib/components/mode/Settings.svelte";
-  import { isConnected } from "@/lib/stores";
+  import { isConnected, projectDir } from "@/lib/stores";
   import Error from "@/lib/components/Error.svelte";
 
   type Mode = "auto" | "manual" | "settings";
   let mode: Mode = "manual";
 
-  onMount(() => {
+  function loadPreviousSettings() {
+    const savedProjectDir = localStorage.getItem("projectDir");
+    if (savedProjectDir) {
+      $projectDir = savedProjectDir;
+    }
+  }
+
+  async function setUp() {
+    loadPreviousSettings();
     connectToVoicevox();
+  }
+
+  onMount(() => {
+    setUp();
   });
 </script>
 

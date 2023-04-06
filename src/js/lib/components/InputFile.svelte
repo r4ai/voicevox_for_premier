@@ -16,13 +16,13 @@
     class="flex flex-row rounded-sm border border-neutral-700 overflow-hidden"
   >
     <button
-      class="btn btn-sm btn-secondary"
+      class="btn btn-sm btn-secondary m-auto"
       on:click|preventDefault={handleFileSelect}
     >
       参照
     </button>
-    <div class="bg-base-100 grow flex overflow-auto">
-      <div class="m-auto">
+    <div class="bg-base-100 grow flex overflow-x-auto whitespace-nowrap">
+      <div class="my-auto ml-2">
         {#if $filePath}
           {#if shouldOnlyShowFileName}
             {#await getFileName($filePath)}
