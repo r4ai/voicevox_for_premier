@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es3",
+    "target": "ES3", // 令和だよ？Adobe君さあ
+    "ignoreDeprecations": "5.0",
     "noLib": true,
     "strict": true,
     "types": [

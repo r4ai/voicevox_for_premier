@@ -23,7 +23,10 @@
     volumeScale,
     prePhonemeLength,
     postPhonemeLength,
+    mogrtFilePath,
   } from "@/lib/stores";
+  import { evalTS } from "@/lib/utils/bolt";
+  import { invokeAlert } from "../../jsx/ppro/ppro";
 
   let speakers: Speaker[] = [];
   let speaker: Speaker | undefined = undefined;
@@ -52,6 +55,7 @@
       console.info("Audio generated!", $queryObj);
     } catch (e) {
       console.error(e);
+      invokeAlert((e as Error).message);
     }
   }
 
@@ -118,10 +122,26 @@
           bind:value={$text}
         />
       </div>
+      <!-- <div>
+        <label class="label" for="mogrt-select">
+          <span class="label-text">字幕の生成に使うMoGRTファイルを選択</span>
+        </label>
+        {#if $mogrtFilePath}
+          <span>{$mogrtFilePath}</span>
+        {/if}
+        <button
+          class="btn btn-sm btn-primary"
+          id="mogrt-select"
+          on:click={() => evalTS("selectMogrt")}
+          >{$mogrtFilePath ? $mogrtFilePath.toString() : "MoGRTファイルを選択"}
+        </button>
+      </div> -->
       <Option />
       <div class="w-full text-center">
         <input type="submit" class="btn btn-md btn-primary" value="Generate" />
       </div>
+
+      <!-- <button on:click={() => evalTS("addTextLayer", "")}>GEN</button> -->
 
       <!-- 開発時のテスト用 -->
       {#if $audioData}

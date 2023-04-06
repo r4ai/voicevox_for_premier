@@ -5,6 +5,7 @@ export const text: Writable<string> = writable("");
 export const speakerId: Writable<number | undefined> = writable(undefined);
 export const queryObj: Writable<Query | undefined> = writable(undefined);
 export const audioData: Writable<Blob | undefined> = writable(undefined);
+export const mogrtFilePath: Writable<string | undefined> = writable(undefined);
 
 export const speedScale: Writable<number> = writable(1);
 export const pitchScale: Writable<number> = writable(0);
