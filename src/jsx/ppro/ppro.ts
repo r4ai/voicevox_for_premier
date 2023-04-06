@@ -50,3 +50,65 @@ export const addText = (mogrtPath: string, text: string) => {
     return;
   }
 };
+
+export const addCaption = (filePath: string) => {
+  const destBin: ProjectItem | 0 = app.project.getInsertionBin();
+  if (destBin) {
+    const prevItemCount = destBin.children.numItems;
+
+    // * Import file
+    if (app.project) {
+      const suppressWarnings = true;
+      const importAsStills = false;
+      app.project.importFiles(
+        [filePath],
+        suppressWarnings,
+        app.project.getInsertionBin(),
+        importAsStills
+      );
+    } else {
+      alert("No project");
+      return;
+    }
+
+    const newItemCount = destBin.children.numItems;
+    if (newItemCount > prevItemCount) {
+      const importedSRT = destBin.children[newItemCount - 1];
+      if (importedSRT) {
+        const activeSeq = app.project.activeSequence;
+        if (activeSeq) {
+          const startAtTime = 0;
+
+          /* `createCaptionTrack` method exists */
+          /* https://ppro-scripting.docsforadobe.dev/sequence/sequence.html#sequence-createcaptiontrack */
+          /* @ts-ignore */
+          const result: boolean = app.project.activeSequence.createCaptionTrack(
+            importedSRT,
+            startAtTime
+          );
+          if (result) {
+            alert("Caption track created");
+            return;
+          } else {
+            alert("Failed to create caption track");
+            return;
+          }
+        } else {
+          alert("No active sequence");
+          return;
+        }
+      } else {
+        alert("Failed to get imported SRT");
+        return;
+      }
+    } else {
+      alert(
+        "importFiles() failed to import, OR return an error message. I quit!"
+      );
+      return;
+    }
+  } else {
+    alert("No destination bin available");
+    return;
+  }
+};

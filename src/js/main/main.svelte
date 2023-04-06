@@ -256,12 +256,10 @@
   {/if}
   <button
     on:click={() => {
-      if (!$mogrtFilePath) {
-        alert("MoGRTファイルが選択されていません。");
-        return;
-      } else {
-        evalTS("addText", $mogrtFilePath, "Helo");
-      }
+      evalTS(
+        "addCaption",
+        "D:\\ProgrammingVideo\\Rust入門\\0\\001_四国めたん（ノーマル）_あいうえお.srt"
+      );
     }}>TEST</button
   >
 </main>
