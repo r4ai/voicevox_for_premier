@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+  import { match } from "ts-pattern";
+  import path from "path";
   function updatedQueryObj(queryObj: Query, newQuery: Partial<Query>) {
     return {
       ...queryObj,
@@ -6,8 +8,34 @@
     };
   }
 
+  async function getOs() {
+    return await evalES(`Folder.fs`, true);
+  }
+
   function alertMsg(msg: string) {
-    evalTS("invokeAlert", msg);
+    evalES(`alert("${msg}");`, true);
+  }
+
+  /**
+   * MoGRTファイルをインポートする
+   * @returns MoGRTファイルのパス
+   */
+  async function getMogrtFilePath() {
+    const fileterString =
+      (await getOs()) === "windows" ? "Motion Graphics Templates:*.mogrt" : "";
+    const mogrtFile = match(
+      await evalES(
+        `var res = File.openDialog("字幕の生成に使うMoGRTファイルを選択", "Adobe After Effects Mogrt:*.mogrt", false); res ? res.fsName : null;`,
+        true
+      )
+    )
+      .with("null", () => null)
+      .otherwise((res) => res);
+    return mogrtFile;
+  }
+
+  async function getFileName(filePath: string) {
+    return path.basename(filePath);
   }
 </script>
 
@@ -34,7 +62,7 @@
     postPhonemeLength,
     mogrtFilePath,
   } from "@/lib/stores";
-  import { evalTS } from "@/lib/utils/bolt";
+  import { evalES, evalTS, evalFile, csi } from "@/lib/utils/bolt";
   import Loading from "@/lib/components/Loading.svelte";
 
   type ConnectingStatus = "connecting" | "connected" | "failed";
@@ -73,20 +101,15 @@
     }
   }
 
-  function handleFileSelect() {
-    // evalTS("selectMogrt").then((res) => {
-    //   $mogrtFilePath = res;
-    // });
-    evalTS("mogrt");
+  async function handleFileSelect() {
+    const res = await getMogrtFilePath();
+    if (res) {
+      $mogrtFilePath = res;
+    }
   }
 
   $: handleSpeakerChange(speaker);
-  $: {
-    if (files?.[0]) {
-      $mogrtFilePath = files[0].name;
-      localStorage.setItem("mogrtFile", files[0].name);
-    }
-  }
+  $: if ($mogrtFilePath) localStorage.setItem("mogrtFile", $mogrtFilePath);
 
   function handleSpeakerChange(speaker: Speaker | undefined) {
     if (speaker) {
@@ -187,7 +210,15 @@
             </button>
             <div class="bg-base-100 grow flex overflow-auto">
               <div class="m-auto">
-                {$mogrtFilePath ? $mogrtFilePath : "ファイルが未選択です"}
+                {#if $mogrtFilePath}
+                  {#await getFileName($mogrtFilePath)}
+                    <span>ファイルが選択されていません</span>
+                  {:then stem}
+                    <span>{stem}</span>
+                  {/await}
+                {:else}
+                  <span>ファイルが選択されていません</span>
+                {/if}
               </div>
             </div>
           </div>
@@ -200,8 +231,6 @@
             value="Generate"
           />
         </div>
-
-        <!-- <button on:click={() => evalTS("addTextLayer", "")}>GEN</button> -->
 
         <!-- 開発時のテスト用 -->
         {#if $audioData}

@@ -1,15 +1,15 @@
-export function helloWorld() {
+export const helloWorld = () => {
   alert("HelloWorld");
-}
+};
 
 export function invokeAlert(msg: string) {
   alert(msg);
 }
 
 /**
- * win: C:\Users\e4zy9\AppData\Roaming\Adobe\Common\Motion Graphics Templates\Credits
+ * win: C:\Users\UserName\AppData\Roaming\Adobe\Common\Motion Graphics Templates\Credits
  */
-export function mogrt(): string {
+export const mogrt = () => {
   // const filterString = match(Folder.fs)
   //   .with("Windows", () => "Motion Graphics Templates:*.mogrt")
   //   .otherwise(() => "");
@@ -21,8 +21,8 @@ export function mogrt(): string {
   // alert("Selected file: " + mogrtToImport.fsName);
   // return mogrtToImport.fsName;
   alert("hoge");
-  return "";
-}
+  return "a";
+};
 
 export function addTextFromMogrt(mogrtFile: File, text: string) {
   if (!mogrtFile.exists) {
