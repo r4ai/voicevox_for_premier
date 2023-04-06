@@ -256,9 +256,12 @@
   {/if}
   <button
     on:click={() => {
-      evalTS("importMogrt").then((res) => {
-        alert(res);
-      });
+      if (!$mogrtFilePath) {
+        alert("MoGRTファイルが選択されていません。");
+        return;
+      } else {
+        evalTS("addText", $mogrtFilePath, "Helo");
+      }
     }}>TEST</button
   >
 </main>
