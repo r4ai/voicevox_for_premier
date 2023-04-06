@@ -32,11 +32,11 @@
     return mogrtFile;
   }
 
-  async function addText(mogrtFilePath: string, text: string) {
-    const layerTitle = "Caption";
-    await alertMsg(`${mogrtFilePath}`);
-    evalTS("addTextFromMogrt", mogrtFilePath, text).then((r) => alert(r));
-  }
+  // async function addText(mogrtFilePath: string, text: string) {
+  //   const layerTitle = "Caption";
+  //   await alertMsg(`${mogrtFilePath}`);
+  //   evalTS("addTextFromMogrt", mogrtFilePath, text).then((r) => alert(r));
+  // }
 
   async function getFileName(filePath: string) {
     const cloned = filePath.slice();
@@ -102,11 +102,11 @@
       $audioData = await createVoice($queryObj, $speakerId);
       console.info("Audio generated!", $queryObj);
 
-      if ($mogrtFilePath) {
-        await addText($mogrtFilePath, $text);
-      } else {
-        throw new Error("MoGRTファイルが選択されていません。");
-      }
+      // if ($mogrtFilePath) {
+      //   await addText($mogrtFilePath, $text);
+      // } else {
+      //   throw new Error("MoGRTファイルが選択されていません。");
+      // }
     } catch (e) {
       console.error(e);
       alertMsg((e as Error).message);
