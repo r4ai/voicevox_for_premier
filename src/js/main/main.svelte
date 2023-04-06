@@ -12,6 +12,18 @@
     const res = path.basename(cloned);
     return res;
   }
+
+  export function connectToVoicevox() {
+    isConnected.set("connecting");
+    connectTest()
+      .then((res) => {
+        isConnected.set(res ? "connected" : "failed");
+      })
+      .catch((e) => {
+        isConnected.set("failed");
+        alertMsg((e as Error).message);
+      });
+  }
 </script>
 
 <script lang="ts">
@@ -23,24 +35,11 @@
   import Manual from "@/lib/components/mode/Manual.svelte";
   import Auto from "@/lib/components/mode/Auto.svelte";
   import Settings from "@/lib/components/mode/Settings.svelte";
-
-  type ConnectingStatus = "connecting" | "connected" | "failed";
-  let isConnected: ConnectingStatus = "connecting";
+  import { isConnected } from "@/lib/stores";
+  import Error from "@/lib/components/Error.svelte";
 
   type Mode = "auto" | "manual" | "settings";
   let mode: Mode = "manual";
-
-  function connectToVoicevox() {
-    isConnected = "connecting";
-    connectTest()
-      .then((res) => {
-        isConnected = res ? "connected" : "failed";
-      })
-      .catch((e) => {
-        isConnected = "failed";
-        alertMsg((e as Error).message);
-      });
-  }
 
   onMount(() => {
     connectToVoicevox();
@@ -68,9 +67,9 @@
       設定
     </button>
   </div>
-  {#if isConnected === "connecting"}
+  {#if $isConnected === "connecting"}
     <Loading msg="VOICEVOXへ接続中..." />
-  {:else if isConnected === "connected"}
+  {:else if $isConnected === "connected"}
     {#if mode === "auto"}
       <Auto />
     {:else if mode === "manual"}
@@ -78,18 +77,13 @@
     {:else if mode === "settings"}
       <Settings />
     {/if}
-  {:else if isConnected === "failed"}
-    <div class="flex flex-col gap-4 mx-2">
-      <article class="mt-4">
-        <p>
-          VOICEVOXへの接続に失敗しました。 <br />
-          VOICEVOXを起動してください。
-        </p>
-      </article>
-      <button class="btn btn-sm btn-error" on:click={connectToVoicevox}>
-        再度VOICEVOXへ接続する
-      </button>
-    </div>
+  {:else if $isConnected === "failed"}
+    <Error>
+      <p>
+        VOICEVOXへの接続に失敗しました。 <br />
+        VOICEVOXを起動してください。
+      </p>
+    </Error>
   {/if}
 </main>
 

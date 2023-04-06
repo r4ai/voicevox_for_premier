@@ -20,6 +20,7 @@
     prePhonemeLength,
     postPhonemeLength,
     mogrtFilePath,
+    isConnected,
   } from "@/lib/stores";
   import { evalES, evalTS, evalFile, csi } from "@/lib/utils/bolt";
   import Loading from "@/lib/components/Loading.svelte";
@@ -99,13 +100,19 @@
     }
   }
 
-  onMount(() => {
-    getSpeakers().then((res) => {
-      speakers = res;
-    });
-    loadPreviousSettings();
-    isLoaded = true;
-  });
+  async function setup() {
+    try {
+      loadPreviousSettings();
+      speakers = await getSpeakers();
+      isLoaded = true;
+    } catch (e) {
+      console.error(e);
+      alertMsg((e as Error).message);
+      $isConnected = "failed";
+    }
+  }
+
+  onMount(setup);
 </script>
 
 {#if isLoaded}
@@ -206,6 +213,8 @@
       );
     }}>TEST</button
   >
+{:else}
+  <Loading msg="Loading..." />
 {/if}
 
 <style></style>
