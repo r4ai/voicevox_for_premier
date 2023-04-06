@@ -16,12 +16,6 @@
     evalES(`alert("${msg}");`, true);
   }
 
-  // async function addText(mogrtFilePath: string, text: string) {
-  //   const layerTitle = "Caption";
-  //   await alertMsg(`${mogrtFilePath}`);
-  //   evalTS("addTextFromMogrt", mogrtFilePath, text).then((r) => alert(r));
-  // }
-
   async function getFileName(filePath: string) {
     const cloned = filePath.slice();
     const res = path.basename(cloned);
