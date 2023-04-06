@@ -34,6 +34,55 @@
     return mogrtFile;
   }
 
+  async function addText(mogrtFilePath: string, text: string) {
+    const layerTitle = "Caption";
+    const res = await evalES(
+      `
+function addTextFromMogrtAndText() {
+  var proj = app.project;
+  var activeSeq = proj.activeSequence;
+  var targetTime = activeSeq.getPlayerPosition();
+
+  var vidTrackOffset = 0;
+  var audTrackOffset = 0;
+
+  var newTrackItem = activeSeq.importMGT(
+    ${mogrtFilePath},
+    targetTime.ticks,
+    vidTrackOffset,
+    audTrackOffset
+  );
+
+  if (!newTrackItem) {
+    alert("Could not import the MoGRT file!");
+    return false;
+  }
+
+  var moComp = newTrackItem.getMGTComponent();
+  if (moComp) {
+    var params = moComp.properties;
+    var srcTextParam = params.getParamForDisplayName(${layerTitle});
+    if (srcTextParam) {
+      var val = srcTextParam.getValue();
+      srcTextParam.setValue(${text});
+    } else {
+      alert("Could not find the text parameter!");
+      return false;
+    }
+  } else {
+    alert("Could not find the MGTComponent!");
+    return false;
+  }
+  alert("Done!");
+  return true;
+};
+addTextFromMogrtAndText();
+    `,
+      true
+    );
+    alertMsg(res);
+  }
+
   async function getFileName(filePath: string) {
     return path.basename(filePath);
   }
@@ -95,6 +144,12 @@
       $queryObj = updatedQueryObj(gotQueryObj, custom);
       $audioData = await createVoice($queryObj, $speakerId);
       console.info("Audio generated!", $queryObj);
+
+      if ($mogrtFilePath) {
+        await addText($mogrtFilePath, $text);
+      } else {
+        throw new Error("MoGRTファイルが選択されていません。");
+      }
     } catch (e) {
       console.error(e);
       alertMsg((e as Error).message);
